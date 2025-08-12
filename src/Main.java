@@ -34,6 +34,8 @@ public class Main {
             System.out.println("-----");
         }
         try {
+
+
             // 1. Tworzymy przykładową listę osób
             List<Person> peopleToSave = new ArrayList<>();
             peopleToSave.add(new Person("Jan", "Kowalski", LocalDate.of(1980, 1, 1)));
