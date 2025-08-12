@@ -20,7 +20,6 @@ public class Main {
             person.adopt(child2);
             person.adopt(child3);
             System.out.println(person.getYoungestChild());
-
             String filePath = "src/family1.csv";
             try {
                 List<Person> eople = Person.fromCsv(filePath);
