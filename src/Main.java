@@ -5,7 +5,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+      /*
         Person person = new Person("Adam", "Nowak", LocalDate.of(2005, 5, 21));
+
         List<Person> people = new ArrayList<>();
         people.add(person);
         people.add(new Person("Pawel", "Kowalski", LocalDate.of(2003, 2, 10)));
@@ -57,7 +59,22 @@ public class Main {
         } catch (IOException e) {
             System.err.println("Błąd IO: " + e.getMessage());
         }
+              */
 
+PlantUMLRunner.setPath(args[0]);
+        PlantUMLRunner.generate("@startuml\n" +
+                "\n" +
+                "object \"Jan Kowalski\" {\n" +
+                "  birth = 1.1.1970\n" +
+                "}\n" +
+                "\n" +
+                "object \"Anna Kowalska\" {\n" +
+                "  birth = 1.1.1990\n" +
+                "}\n" +
+                "\n" +
+                "\"Anna Kowalska\" --> \"Jan Kowalski\"\n" +
+                "\n" +
+                "@enduml\n", "uml", "test");
 
     }
 }
