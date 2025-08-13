@@ -61,7 +61,7 @@ public class Main {
         }
               */
 
-PlantUMLRunner.setPath(args[0]);
+        PlantUMLRunner.setPath("C:\\plantuml\\plantuml-1.2025.4.jar");
         PlantUMLRunner.generate("@startuml\n" +
                 "\n" +
                 "object \"Jan Kowalski\" {\n" +
@@ -74,7 +74,7 @@ PlantUMLRunner.setPath(args[0]);
                 "\n" +
                 "\"Anna Kowalska\" --> \"Jan Kowalski\"\n" +
                 "\n" +
-                "@enduml\n", "uml", "test");
+                "@enduml\n", "uml", "test.puml");
 
     }
 }
