@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Person implements Comparable <Person>, Serializable {
     private String name;
@@ -190,6 +191,27 @@ public static List<Person> fromBinaryFile(String path) throws IOException {
             }
         }
         return persons;
+    }
+    public static List<Person> sortbByBrirthDate(List<Person> people) {
+        return people.stream()
+                .sorted(Comparator.comparing(Person::getBirthDate))
+                .collect(Collectors.toList());
+    }
+
+    public static List<Person> sortbByBirthDate(List<Person> people) {
+        Function<Person, Long> getLifespan = p -> p.getDeathDate().toEpochDay() - p.getBirthDate().toEpochDay();
+
+        return people.stream()
+                .filter(p -> p.getDeathDate() != null)
+                .sorted(Comparator.comparingLong(getLifespan::apply).reversed())
+                .toList();
+    }
+
+    public static Person findOldestLiving (List<Person> people) {
+        return people.stream()
+                .filter(p -> p.deathDate == null)
+                .min(Comparator.comparing(Person::getBirthDate))
+                .orElse(null);
     }
 
 }

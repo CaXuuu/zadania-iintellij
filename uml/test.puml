@@ -1,0 +1,13 @@
+@startuml
+
+object "Jan Kowalski" {
+  birth = 1.1.1970
+}
+
+object "Anna Kowalska" {
+  birth = 1.1.1990
+}
+
+"Anna Kowalska" --> "Jan Kowalski"
+
+@enduml

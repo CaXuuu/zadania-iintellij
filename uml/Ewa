@@ -1,0 +1,5 @@
+@startuml
+object "Ewa" {
+birth = 1901-11-03
+}
+@enduml

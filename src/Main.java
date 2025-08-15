@@ -93,22 +93,11 @@ public class Main {
         System.out.println("Znaleziono osób z 'Kowalski': " + result.size());
 
 // Wypisz wyniki
-        for(Person person : result) {
+        for (Person person : result) {
             System.out.println("- " + person.getName() + " " + person.getSurname());
         }
     }
-    public static List<Person> sortbByBrirthDate(List<Person> people) {
-        return people.stream()
-                .sorted(Comparator.comparing(Person::getBirthDate))
-                .collect(Collectors.toList());
-    }
 
-    public static List<Person> sortbByBirthDate(List<Person> people) {
-        Function<Person , Long> getLifespan = p -> p.getDeathDate().toEpochDay() - p.getBirthDate().toEpochDay();
 
-        return people.stream()
-                .filter(p -> p.getDeathDate() != null)
-                .sorted(Comparator.comparingLong(getLifespan::apply).reversed())
-                .toList();
-    }
+
 }
