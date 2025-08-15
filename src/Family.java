@@ -11,7 +11,7 @@ public class Family {
       mapa.get(key).add(person);
         }
     }
-    public Person[] Persons (String Fullname){
+    public Person[] get (String Fullname){
         List<Person> lista = mapa.get(Fullname);
         if( lista == null) System.out.println("Nie ma takiej osoby");
         lista.sort(Comparator.comparing(Person::getBirthDate));

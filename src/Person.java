@@ -2,6 +2,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Function;
 
 public class Person implements Comparable <Person>, Serializable {
     private String name;
@@ -10,8 +11,24 @@ public class Person implements Comparable <Person>, Serializable {
     private LocalDate deathDate;
     private Set<Person>children =new HashSet<>();
 
+private Person mother;
+private Person father;
 
+    public Person getMother() {
+        return mother;
+    }
 
+    public void setMother(Person mother) {
+        this.mother = mother;
+    }
+
+    public Person getFather() {
+        return father;
+    }
+
+    public void setFather(Person father) {
+        this.father = father;
+    }
 
     public String getName() {
         return name;
@@ -146,6 +163,33 @@ public static List<Person> fromBinaryFile(String path) throws IOException {
         }
     ois.close();
     return people;
+    }
+
+    public String toPlantUNL(){
+        Function<Person, String> personToUmlObject = (person) -> {
+            StringBuilder builder = new StringBuilder();
+            builder.append(String.format("object \"%s\" {\n", person.getName()));
+            builder.append(String.format("birth = %s", person.birthDate));
+            builder.append("\n}\n");
+            return builder.toString();
+        };
+        StringBuilder builder = new StringBuilder();
+        builder.append("@startuml\n");
+        builder.append(personToUmlObject.apply(this));
+        children.forEach(person -> builder.append(personToUmlObject.apply(person)));
+        builder.append("@enduml\n");
+        return builder.toString();
+    }
+
+    public static List<Person> filterByName(List<Person> people, String substring){
+        List <Person> persons = new ArrayList<>();
+        for(Person person : people) {
+            String fullName = person.getName() + " " + person.getSurname();
+            if (fullName.contains(substring)) {
+                persons.add(person);
+            }
+        }
+        return persons;
     }
 
 }

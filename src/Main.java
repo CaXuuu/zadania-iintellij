@@ -1,10 +1,13 @@
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AmbiguousPersonException, IOException {
       /*
         Person person = new Person("Adam", "Nowak", LocalDate.of(2005, 5, 21));
 
@@ -62,7 +65,7 @@ public class Main {
               */
 
         PlantUMLRunner.setPath("C:\\plantuml\\plantuml-1.2025.4.jar");
-        PlantUMLRunner.generate("@startuml\n" +
+      /*  PlantUMLRunner.generate("@startuml\n" +
                 "\n" +
                 "object \"Jan Kowalski\" {\n" +
                 "  birth = 1.1.1970\n" +
@@ -75,6 +78,37 @@ public class Main {
                 "\"Anna Kowalska\" --> \"Jan Kowalski\"\n" +
                 "\n" +
                 "@enduml\n", "uml", "test.puml");
+*/
+        List<Person> people = Person.fromCsv("C:\\Users\\macie\\IdeaProjects\\untitled6\\src\\family1.csv");
+        Family family = new Family();
+        people.forEach(family::add);
+        Person ewa = family.get("Ewa Kowalska")[0];
+        PlantUMLRunner.generate(ewa.toPlantUNL(), "uml", "Ewa");
 
+        List<Person> peoplee = Person.fromCsv("src/family1.csv");
+        System.out.println("Wczytano osób: " + peoplee.size());
+
+// Sprawdź metodę
+        List<Person> result = Person.filterByName(people, "Kowalski");
+        System.out.println("Znaleziono osób z 'Kowalski': " + result.size());
+
+// Wypisz wyniki
+        for(Person person : result) {
+            System.out.println("- " + person.getName() + " " + person.getSurname());
+        }
+    }
+    public static List<Person> sortbByBrirthDate(List<Person> people) {
+        return people.stream()
+                .sorted(Comparator.comparing(Person::getBirthDate))
+                .collect(Collectors.toList());
+    }
+
+    public static List<Person> sortbByBirthDate(List<Person> people) {
+        Function<Person , Long> getLifespan = p -> p.getDeathDate().toEpochDay() - p.getBirthDate().toEpochDay();
+
+        return people.stream()
+                .filter(p -> p.getDeathDate() != null)
+                .sorted(Comparator.comparingLong(getLifespan::apply).reversed())
+                .toList();
     }
 }
