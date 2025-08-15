@@ -83,7 +83,7 @@ public class Main {
         Family family = new Family();
         people.forEach(family::add);
         Person ewa = family.get("Ewa Kowalska")[0];
-        PlantUMLRunner.generate(ewa.toPlantUNL(), "uml", "Ewa");
+        PlantUMLRunner.generate(ewa.toPlantUNL(s ->s), "uml", "Ewa");
 
         List<Person> peoplee = Person.fromCsv("src/family1.csv");
         System.out.println("Wczytano osób: " + peoplee.size());

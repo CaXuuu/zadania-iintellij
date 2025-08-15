@@ -166,7 +166,7 @@ public static List<Person> fromBinaryFile(String path) throws IOException {
     return people;
     }
 
-    public String toPlantUNL(){
+    public String toPlantUNL(Function<String, String> postProcess){
         Function<Person, String> personToUmlObject = (person) -> {
             StringBuilder builder = new StringBuilder();
             builder.append(String.format("object \"%s\" {\n", person.getName()));
@@ -176,8 +176,8 @@ public static List<Person> fromBinaryFile(String path) throws IOException {
         };
         StringBuilder builder = new StringBuilder();
         builder.append("@startuml\n");
-        builder.append(personToUmlObject.apply(this));
-        children.forEach(person -> builder.append(personToUmlObject.apply(person)));
+        builder.append(postProcess.apply(personToUmlObject.apply(this)));
+        children.forEach(person -> builder.append(postProcess.apply(personToUmlObject.apply(person))));
         builder.append("@enduml\n");
         return builder.toString();
     }
